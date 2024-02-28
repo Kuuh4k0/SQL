@@ -1,0 +1,23 @@
+/* Página html inicial */
+
+.botao1{
+background-color: white;
+border-style: double;
+border-color: lightgray;
+border-width: 3px;
+border-radius: 40px;
+padding: 5px;
+}
+.botao1:hover{
+background-color: lightgray;
+border-color: gray;
+scale: 1.03;
+}
+
+.setaesquerda{
+    margin-top: 50%;
+}
+.setadireita{
+    margin-top: 50%;
+    margin-left: 85%;
+}
