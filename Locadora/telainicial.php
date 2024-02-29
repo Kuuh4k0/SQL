@@ -69,26 +69,27 @@ if ($_SESSION['idadm']) {
             <div id="conteudo"></div>
 
             <?php
-
-// Inicializa a sessão cURL
-$curl = curl_init();
-
-// Define a URL da API
-$url = 'http://localhost/Locadora/index(Lost).html';
-
-// Define as opções da requisição
-curl_setopt($curl, CURLOPT_URL, $url);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-// Envia a requisição e obtém a resposta
-$response = curl_exec($curl);
-
-// Fecha a sessão cURL
-curl_close($curl);
-
-// Exibe a resposta
-echo $response;
-
+$url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
+$parametros = [
+    'sol' => 990,
+    'camera' => 'navcam',
+    'api_key' => 'X0Em0qtepQacDZpIDbQ9h2SJ5JznKHbxCzWc5EQF' 
+];
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query($parametros));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$resposta = curl_exec($ch);
+curl_close($ch);
+$data = json_decode($resposta, true);
+$width = 1595;
+$height = 813;
+if(isset($data['photos']) && !empty($data['photos'])) {
+    foreach ($data['photos'] as $photo) {
+        echo '<img src="' . $photo['img_src'] . '" alt="Foto de marte" style="width: ' . $width . 'px; height:' . $height  . 'px; margin: -13px"><br>';
+}
+} else {
+    echo 'Imagem não disponível!';
+}
 ?>
 
 
