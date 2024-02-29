@@ -24,20 +24,27 @@ switch ($acao) {
 } */
 $controle = filter_input(INPUT_POST, 'controle', FILTER_SANITIZE_STRING);
 
-switch ($controle){
+switch ($controle) {
     case 'listaGenero':
         include_once './adm/generos.php';
         break;
     case 'listaFilmes':
         include_once './adm/filmes.php';
-        break;    
+        break;
+    case 'listaCliente':
+        include_once './adm/cliente.php';
+        break;
+    case 'generoAdd':
+        include_once './generoadd.php';
+        break;
     case 'listaCliente':
         include_once './adm/cliente.php';
         break;
     default:
         echo 'Lista Inexistente!';
+        break;
 }
-    
+
 
 /* if (isset($controle) && !empty($controle)){
     $controle = $_POST['controle'];
@@ -54,4 +61,3 @@ switch ($controle){
     } else {
         echo 'Página ineistente!!!';
     } */
-?>

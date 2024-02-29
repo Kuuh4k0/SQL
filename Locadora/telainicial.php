@@ -57,9 +57,9 @@ if ($_SESSION['idadm']) {
             <div class="offcanvas-body mt-2">
                 <div>
                     <ul>
-                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaCliente')" href="#">Cliente</a></li>
-                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaGenero')" href="#">Genero</a></li>
-                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaFilmes')" href="#">Filmes</a></li>
+                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaCliente')">Cliente</a></li>
+                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaGenero')">Genero</a></li>
+                        <li style="list-style: none; text-align: center;"><a class="nomee" style="text-decoration: none; color: #fbfbfb" onclick="carregarConteudo('listaFilmes')">Filmes</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,29 +68,7 @@ if ($_SESSION['idadm']) {
 
             <div id="conteudo"></div>
 
-            <?php
-$url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
-$parametros = [
-    'sol' => 990,
-    'camera' => 'navcam',
-    'api_key' => 'X0Em0qtepQacDZpIDbQ9h2SJ5JznKHbxCzWc5EQF' 
-];
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url . '?' . http_build_query($parametros));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$resposta = curl_exec($ch);
-curl_close($ch);
-$data = json_decode($resposta, true);
-$width = 1595;
-$height = 813;
-if(isset($data['photos']) && !empty($data['photos'])) {
-    foreach ($data['photos'] as $photo) {
-        echo '<img src="' . $photo['img_src'] . '" alt="Foto de marte" style="width: ' . $width . 'px; height:' . $height  . 'px; margin: -13px"><br>';
-}
-} else {
-    echo 'Imagem não disponível!';
-}
-?>
+
 
 
         </div>
@@ -108,13 +86,13 @@ if(isset($data['photos']) && !empty($data['photos'])) {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="#" method="post">
+                            <form action="#" method="post" id='frmAddGenero'>
                                 <div class="mb-3">
                                     <label for="idgenero" class="form-label">Gênero</label>
                                     <br>
                                     <input type="text" class="form-control-sm genero" id="idGenero" aria-label=".form-control" required="required" name="genero" placeholder="Digite um gênero:">
                                 </div>
-                                <button type="submit" id="btnAddGenero" class="btn btn-sm btn-primary">Submit</button>
+                                <button type="submit" id="btnAddGenero" class="btn btn-sm btn-primary" onclick=''>Submit</button>
                             </form>
                         </div>
                     </div>
@@ -132,6 +110,7 @@ if(isset($data['photos']) && !empty($data['photos'])) {
     <script src="./js/func.js">
     </script>
 </body>
+
 <footer class="new_footer_area bg_color">
     <div class="new_footer_top">
         <div class="container">
