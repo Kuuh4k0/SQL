@@ -82,47 +82,47 @@ function carregarConteudo(controle) {
     })
         .then(response => response.text())
         .then(data => {
+    
             document.getElementById('conteudo').innerHTML = data;
         })
-        .catch(error => console.error('Erro ba requisição:', error));
+        .catch(error => console.error('Erro na requisição:', error));
 }
 
 const cadastrargenero = document.getElementById('CadastrarGenero');
+const formGenero = document.getElementById('frmAddGenero');
 const ingenero = document.getElementById('idGenero');
 const btnAddGenero = document.getElementById('btnAddGenero');
-
 if (cadastrargenero) {
-    const formGenero = document.getElementById('frmAddGenero');
 
     cadastrargenero.addEventListener('shown.bs.modal', () => {
         ingenero.focus();
-
+       
         const submitHandler = function (event) {
+            processando();
             event.preventDefault();
             btnAddGenero.disabled = true;
-
-
+           
             var form = event.target;
             var formData = new FormData(form);
-
             formData.append('controle', 'generoAdd');
             fetch('controle.php', {
                 method: 'POST',
                 body: formData,
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
+            .then(response => response.json())
+            .then(data => {
+                
                     if (data.success) {
 
                     } else {
 
                     }
                 })
+              
                 .catch(error => {
                     console.error('Erro na requisição:', error);
                 })
         }
-
+        formGenero.addEventListener('submit', submitHandler)
     })
 }

@@ -1,11 +1,11 @@
 <?php
-function listarTabela($campos,$tabela, $campoOrdem)
+function listarTabela($campos, $tabela, $campoOrdem)
 {
     $conn = conectar();
     try {
         $conn->beginTransaction();
         $sqlLista = $conn->prepare("SELECT $campos FROM $tabela ORDER BY $campoOrdem ");
-//        $sqlLista->bindValue(1, $campoParametro, PDO::PARAM_INT);
+        //        $sqlLista->bindValue(1, $campoParametro, PDO::PARAM_INT);
         $sqlLista->execute();
         $conn->commit();
         if ($sqlLista->rowCount() > 0) {
@@ -13,8 +13,7 @@ function listarTabela($campos,$tabela, $campoOrdem)
         } else {
             return 'Vazio';
         };
-    } catch
-    (PDOException $e) {
+    } catch (PDOException $e) {
         echo 'Exception -> ';
         return ($e->getMessage());
         $conn->rollback();
@@ -28,9 +27,9 @@ function validarSenha($campos, $tabela, $campoBdString, $campoBdString2, $campoP
 
     try {
         $conn->beginTransaction();
-        $sqlLista = $conn -> prepare ("SELECT $campos "
-        ."FROM $tabela "
-        ."WHERE $campoBdString = ? AND $campoBdString2 = ? AND $campoBdAtivo = ? ");
+        $sqlLista = $conn->prepare("SELECT $campos "
+            . "FROM $tabela "
+            . "WHERE $campoBdString = ? AND $campoBdString2 = ? AND $campoBdAtivo = ? ");
         $sqlLista->bindValue(1, $campoParametro, PDO::PARAM_STR);
         $sqlLista->bindValue(2, $campoParametro2, PDO::PARAM_STR);
         $sqlLista->bindValue(3, $valorAtivo, PDO::PARAM_STR);
@@ -41,8 +40,7 @@ function validarSenha($campos, $tabela, $campoBdString, $campoBdString2, $campoP
         } else {
             return 'Vazio';
         }
-    } catch (throwable $e)
-    {
+    } catch (throwable $e) {
         $error_message = 'Throwable: ' . $e->getMessage() . PHP_EOL;
         $error_message = 'File: ' . $e->getFile() . PHP_EOL;
         $error_message = 'Line: ' . $e->getLine() . PHP_EOL;
@@ -77,6 +75,28 @@ function validarSenhaCriptografia($campos, $tabela, $campoBdstring, $campoBdstri
         return null;
     } catch (Throwable $e) {
         echo 'Exception -> ';
+        return ($e->getMessage());
+        $conn->rollback();
+    };
+    $conn = null;
+}
+function insertUnico($tabela, $campos, $value1)
+{
+    $conn = conectar();
+    try {
+        $conn->beginTransaction();
+        $sqInsert = $conn->prepare("INSERT INTO $tabela($campos) VALUES ('$value1')");
+        // $sqInsert->bindValue(1, $value1, PDO::PARAM_STR);
+
+        $sqInsert->execute();
+        $conn->commit();
+        if ($sqInsert->rowCount() > 0) {
+            return $sqInsert->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            return 'nGravado';
+        };
+    } catch (PDOException $e) {
+        echo 'Execption -> ';
         return ($e->getMessage());
         $conn->rollback();
     };
