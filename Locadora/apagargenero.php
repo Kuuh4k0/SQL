@@ -5,9 +5,11 @@ include_once "func/funcoes.php";
 $conn = conectar();
 
 $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
 if (isset($Dados) && !empty($Dados)) {
-    $id = isset($dados['idgenero']) ? intval($dados['idgenero']) : 0;
-    $retornoUpdate =  apagarGenero($id);
+    $id = isset($Dados['idgenero']) ? intval($Dados['idgenero']) : 0;
+    
+    $retornoUpdate =  apagarGenero('genero', 'idGenero', $id);
     if ($retornoUpdate > 0) {
         echo json_encode(['success' => true, 'message' => "Genero excluido com successo!"]);
     } else {
