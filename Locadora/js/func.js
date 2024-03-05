@@ -82,7 +82,7 @@ function carregarConteudo(controle) {
     })
         .then(response => response.text())
         .then(data => {
-    
+
             document.getElementById('conteudo').innerHTML = data;
         })
         .catch(error => console.error('Erro na requisição:', error));
@@ -96,12 +96,12 @@ if (cadastrargenero) {
 
     cadastrargenero.addEventListener('shown.bs.modal', () => {
         ingenero.focus();
-       
+
         const submitHandler = function (event) {
             processando();
             event.preventDefault();
             btnAddGenero.disabled = true;
-           
+
             var form = event.target;
             var formData = new FormData(form);
             formData.append('controle', 'generoAdd');
@@ -109,20 +109,87 @@ if (cadastrargenero) {
                 method: 'POST',
                 body: formData,
             })
-            .then(response => response.json())
-            .then(data => {
-                
+                .then(response => response.json())
+                .then(data => {
+                    esconderProcessando();
+                    
                     if (data.success) {
-
+                        window.location.href = 'telainicial.php';
                     } else {
 
                     }
                 })
-              
+
                 .catch(error => {
                     console.error('Erro na requisição:', error);
                 })
         }
         formGenero.addEventListener('submit', submitHandler)
     })
+}
+
+function abrirModalEdicao(genero, idgenero) {
+    var inGeneroEdit = document.getElementById('generoEdit');
+    if (inGeneroEdit) {
+        inGeneroEdit.focus();
+        inGeneroEdit.value = genero
+    }
+    document.getElementById('idgeneroedit').value = idgenero
+    abrirFecharModalJs('modalAltGenero', 'A');
+}
+function abrirFecharModalJs(nomeModal, abrirOufechar) {
+    var modalInstancia = new bootstrap.Modal(document.getElementById(nomeModal));
+    if (abrirOufechar == 'A') {
+        modalInstancia.show();
+    } else {
+        modalInstancia.hide();
+    }
+}
+
+document.getElementById('frmEditGenero').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    formData.append('controle', 'generoAlt');
+    fetch('controle.php', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            esconderProcessando();
+            window.location.href = 'telainicial.php';
+            if (data.success) {
+                alert(data.message)
+            } else {
+                alert(data.message)
+            }
+        })
+
+        .catch(error => {
+            console.error('Erro na requisição:', error);
+        });
+});
+
+function deletegenero(controle, id) {
+    /* alert (controle + id) */
+    fetch('controle.php', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/x-www-form-urlencoded',
+        },
+        body: 'controle=' + encodeURIComponent(controle) + '&idgenero=' + encodeURIComponent(id),
+
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data.success) {
+                console.log()
+                carregarConteudo('listarGenero')
+                alert (data.message)
+            } else {
+            }
+        })
+        .catch(error => console.error('Erro na requisição:', error));
 }

@@ -1,5 +1,4 @@
 <?php
-
 include_once "config/conexao.php";
 include_once "config/constantes.php";
 include_once "func/funcoes.php";
@@ -17,6 +16,7 @@ include_once "func/funcoes.php";
             <tr>
                 <th scope="col">IDGêneros</th>
                 <th scope="col">Gênero</th>
+                <th scope="col">Alterar</th>
             </tr>
         </thead>
         <tbody>
@@ -34,18 +34,21 @@ include_once "func/funcoes.php";
                             <?php echo "$idgenero"; ?>
                         </th>
                         <td>
-                            <?php echo "$genero"; ?>
+                          <?php echo "$genero"; ?>
+                        </td>
+                        <td>
+                        <button type='button' class="btn btn-success"
+                        onclick='abrirModalEdicao("<?php echo $genero ?>", "<?php echo $idgenero ?>")'>Ver Mais</button> 
+                        <button type='button' class="btn btn-primary"
+                        onclick='abrirModalEdicao("<?php echo $genero ?>", "<?php echo $idgenero ?>")'>Alterar</button> 
+                        <button type='button' class="btn btn-danger"
+                        onclick='deletegenero("apagarGenero", <?php echo $idgenero; ?>)'>Excluir</button> 
                         </td>
                     </tr>
-
             <?php
                 }
             }
             ?>
-
-
-            
-    </script>
         </tbody>
     </table>
 </div>

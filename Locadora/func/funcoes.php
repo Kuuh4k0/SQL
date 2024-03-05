@@ -101,4 +101,50 @@ function insertUnico($tabela, $campos, $value1)
         $conn->rollback();
     };
     $conn = null;
+} 
+
+function AlterarUm($tabela, $campo, $valordb, $id, $idalt)
+{
+    $conn = conectar();
+    try {
+        $conn->beginTransaction();
+        $sqInsert = $conn->prepare("UPDATE $tabela SET $campo = ? WHERE $id = ?");
+        $sqInsert->bindValue(1, $valordb, PDO::PARAM_STR);
+        $sqInsert->bindValue(2, $idalt, PDO::PARAM_INT);
+
+        $sqInsert->execute();
+        $conn->commit();
+        if ($sqInsert->rowCount() > 0) {
+            return $sqInsert->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            return 'nGravado';
+        };
+    } catch (PDOException $e) {
+        echo 'Execption -> ';
+        return ($e->getMessage());
+        $conn->rollback();
+    };
+    $conn = null;
+} 
+
+function apagarGenero ($tabela, $id, $idvalor){
+    $conn = conectar();
+    try {
+        $conn->beginTransaction();
+        $sqInsert = $conn->prepare("DELETE FROM $tabela WHERE $id = ?");
+        $sqInsert->bindValue(1, $idvalor, PDO::PARAM_INT);
+
+        $sqInsert->execute();
+        $conn->commit();
+        if ($sqInsert->rowCount() > 0) {
+            return $sqInsert->rowCount();
+        } else {
+            return null;
+        };
+    } catch (PDOException $e) {
+        echo 'Execption -> ';
+        return ($e->getMessage());
+        $conn->rollback();
+    };
+    $conn = null;
 }
