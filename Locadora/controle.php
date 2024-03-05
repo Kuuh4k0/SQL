@@ -1,4 +1,8 @@
 <?php
+include_once "config/conexao.php";
+include_once "config/constantes.php";
+include_once "func/funcoes.php";
+$conn = conectar();
 
 /* $acao = filter_input(INPUT_POST, 'acao', FILTER_SANITIZE_STRING);
 $acaoid = filter_input(INPUT_POST, 'acaoid', FILTER_SANITIZE_NUMBER_INT);
@@ -37,14 +41,16 @@ switch ($controle) {
     case 'generoAdd':
         include_once './generoadd.php';
         break;
-    case 'listaCliente':
-        include_once './adm/cliente.php';
+    case 'apagarGenero';
+        include_once './apagargenero.php';
+        break;
+    case 'generoAlt':
+        include_once './generoAlt.php';
         break;
     default:
         echo 'Lista Inexistente!';
         break;
 }
-
 
 /* if (isset($controle) && !empty($controle)){
     $controle = $_POST['controle'];
@@ -61,3 +67,4 @@ switch ($controle) {
     } else {
         echo 'Página ineistente!!!';
     } */
+

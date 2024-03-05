@@ -11,7 +11,7 @@ $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (isset($Dados) && !empty($Dados)){
     $cliente = isset($Dados["cliente"]) ? addslashes(mb_strtoupper($Dados["cliente"], 'UTF-8')) : '';
 
-    $retornoInsert = insertUnico('cliente', 'nome, email, CPF, senha',$genero);
+    $retornoInsert = insertUnico('cliente', 'nome, email, CPF, senha',$cliente);
   
     if ($retornoInsert > 0) {
         echo json_encode(['success' => true, 'message' => "Cliente $cliente cadastrado com successo!"],JSON_THROW_ON_ERROR);

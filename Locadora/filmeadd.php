@@ -11,10 +11,10 @@ $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (isset($Dados) && !empty($Dados)){
     $genero = isset($Dados["genero"]) ? addslashes(mb_strtoupper($Dados["genero"], 'UTF-8')) : '';
 
-    $retornoInsert = insertUnico('genero', 'genero',$genero);
+    $retornoInsert = insertUnico('genero', 'genero',$Filme);
   
     if ($retornoInsert > 0) {
-        echo json_encode(['success' => true, 'message' => "Genero $genero cadastrado com successo!"],JSON_THROW_ON_ERROR);
+        echo json_encode(['success' => true, 'message' => "Genero $Filme cadastrado com successo!"],JSON_THROW_ON_ERROR);
     } else {
         echo json_encode(['success' => false, 'message' => "Genero não cadastrado! ErroR Bd"],JSON_THROW_ON_ERROR);
     }

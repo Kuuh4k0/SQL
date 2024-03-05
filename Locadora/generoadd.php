@@ -6,8 +6,6 @@ $conn = conectar();
 
 $Dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-// echo json_encode([$Dados['genero']]);
-
 if (isset($Dados) && !empty($Dados)){
     $genero = isset($Dados["genero"]) ? addslashes(mb_strtoupper($Dados["genero"], 'UTF-8')) : '';
 
